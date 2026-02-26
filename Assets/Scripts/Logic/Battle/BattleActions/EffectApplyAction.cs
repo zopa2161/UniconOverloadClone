@@ -14,7 +14,7 @@ namespace Logic.Battle.BattleActions
         public override void Execute(IBattleAPI requester, IBattleContext ctx)
         {        
             Debug.Log("Execute Apply Effect Action");
-            Debug.Log($"Skill Execute Target Count : {_ctx.targets.Count}");
+            //Debug.Log($"Skill Execute Target Count : {_ctx.targets.Count}");
             foreach (var target in _ctx.targets)
             {
                 

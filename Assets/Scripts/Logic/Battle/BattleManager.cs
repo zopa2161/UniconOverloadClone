@@ -91,7 +91,9 @@ namespace Logic.Battle
         public void PushSkillSequence(SkillExecutionContext ctx)
         {
             //일련의 스킬 액션들을 역순으로 밀어넣기.
+            
             PushAction(new EffectApplyAction(ctx));
+            PushAction(new OnBeforeHitAction(ctx));
             PushAction(new OnTargetingAction(ctx));
         }
         public void PushAction(IBattleAction action)
