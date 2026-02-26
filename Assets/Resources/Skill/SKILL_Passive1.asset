@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a6a58359e4a482987e8a871074f4fcb, type: 3}
+  m_Name: SKILL_Passive1
+  m_EditorClassIdentifier: Game.Core::Core.Data.Skills.Skill
+  id: 1
+  icon: {fileID: 0}
+  codeName: Passive1
+  displayName: 
+  _type: 1
+  _timing: 2
+  _condition:
+  - rid: 2035419799843766340
+  - rid: 2035419801516245060
+  - rid: 2035419803055816773
+  _actions:
+  - _targetingType: 0
+    _targetingScheme:
+      _scope:
+        rid: 2035419794666422340
+      _tactics: []
+    _effectOverrides:
+    - _effect: {fileID: 11400000, guid: 60d6d67bd6d0de341a8a69626ba663df, type: 2}
+      _effectActionOverride:
+        rid: 2035419794666422342
+    _triggerTiming: -1
+  references:
+    version: 2
+    RefIds:
+    - rid: 2035419794666422340
+      type: {class: SingleTargetScope, ns: Logic.Battle.Skills.Scopes, asm: Game.Logic}
+      data:
+        _isFriendly: 0
+    - rid: 2035419794666422342
+      type: {class: DealDamageAction, ns: Logic.Battle.Effects.EffectActions, asm: Game.Logic}
+      data:
+        _defaultDamage: 0
+        _bonusStatType: 4
+        _bonusFactor: 0
+        _defenseStatType: 9
+    - rid: 2035419799843766340
+      type: {class: EffectTypeTriggerCondition, ns: Logic.Battle.Skills.TriggerConditions, asm: Game.Logic}
+      data:
+        _type: 1
+    - rid: 2035419801516245060
+      type: {class: PassiveTypeTriggerCondition, ns: Logic.Battle.Skills.TriggerConditions, asm: Game.Logic}
+      data:
+        _reactToPassive: 0
+    - rid: 2035419803055816773
+      type: {class: TargetFactionTriggerCondition, ns: Logic.Battle.Skills.TriggerConditions, asm: Game.Logic}
+      data:
+        _isFriendly: 1

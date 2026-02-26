@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a6a58359e4a482987e8a871074f4fcb, type: 3}
+  m_Name: New Skill
+  m_EditorClassIdentifier: Game.Core::Core.Data.Skills.Skill
+  id: 0
+  icon: {fileID: 0}
+  codeName: 
+  displayName: 
+  _type: 0
+  _timing: 0
+  _condition:
+  - rid: 2035419775026856009
+  _actions:
+  - _targetingType: 0
+    _targetingScheme:
+      _scope:
+        rid: 2035419751019446466
+      _tactics:
+      - rid: 2035419751019446467
+    _effectOverrides:
+    - _effect: {fileID: 0}
+      _effectActionOverride:
+        rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 2035419751019446466
+      type: {class: SingleTargetScope, ns: Logic.Battle.Skills.Scopes, asm: Game.Logic}
+      data:
+        _isFriendly: 0
+    - rid: 2035419751019446467
+      type: {class: HighestHpTargetTactic, ns: Logic.Battle.Skills.Tactics, asm: Game.Logic}
+      data: 
+    - rid: 2035419775026856009
+      type: {class: EffectTypeTriggerCondition, ns: Logic.Battle.Skills.TriggerConditions, asm: Game.Logic}
+      data:
+        _type: 0

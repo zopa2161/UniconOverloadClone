@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19cc880b5dd14c58af366df7473bdd04, type: 3}
+  m_Name: CHARACTERDATA_Ch1
+  m_EditorClassIdentifier: Game.Core::Core.Data.Character.CharacterData
+  id: 0
+  icon: {fileID: 0}
+  codeName: Ch1
+  displayName: 
+  _activeSkillData:
+  - {fileID: 11400000, guid: 236b22d146b5d044eb04b36f1a24cbf7, type: 2}
+  _passiveSkillData:
+  - {fileID: 11400000, guid: 2e20d705e822a7445b45164ad23d2022, type: 2}
+  _statData:
+  - _type: 0
+    _value: 10
+  - _type: 1
+    _value: 10
+  - _type: 2
+    _value: 1
+  - _type: 3
+    _value: 1
+  - _type: 14
+    _value: 1
