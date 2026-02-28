@@ -19,6 +19,7 @@ namespace Core.Data.Skills
         public List<SkillTacticData> PassiveSkillTacticQueue => _passiveSkillTacticQueue;
 
 
+        //SO로 부터 생성될때
         public SkillSystem(CharacterInstance owner, List<Skill> activeSkills, List<Skill> passiveSkills)
         {
             _activeSkills = new List<SkillInstance>();
@@ -32,6 +33,26 @@ namespace Core.Data.Skills
             {
                 _passiveSkills.Add(new SkillInstance(skill, owner));
             }
+        }
+        
+        //복사 생성자
+        public SkillSystem(SkillSystem original, CharacterInstance owner)
+        {
+            _activeSkills = new List<SkillInstance>();
+            _passiveSkills = new List<SkillInstance>();
+            
+            foreach (var skill in original._activeSkills)
+            {
+                _activeSkills.Add(new SkillInstance(skill.Data, owner));
+            }
+            foreach (var skill in original._passiveSkills)
+            {
+                _passiveSkills.Add(new SkillInstance(skill.Data, owner));
+            }
+            
+            //전술 데이터는 얕은 복사?
+            _activeSkillTacticQueue = original.ActiveSkillTacticQueue;  
+            _passiveSkillTacticQueue = original.PassiveSkillTacticQueue;
         }
 
         public void TestingTacticDataSetup()

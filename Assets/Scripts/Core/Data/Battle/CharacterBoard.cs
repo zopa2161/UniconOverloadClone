@@ -2,6 +2,7 @@
 using System.Linq;
 using Core.Data.Character;
 using Core.Interfaces;
+using UnityEngine;
 
 namespace Core.Data.Battle
 {
@@ -12,6 +13,19 @@ namespace Core.Data.Battle
         public CharacterBoard()
         {
             characters = new CharacterInstance[6];
+        }
+
+        public CharacterBoard(CharacterBoard original)
+        {
+            characters = new CharacterInstance[6];
+            Debug.Log(original.characters.Length);
+            for (var i = 0; i < original.characters.Length; i++)
+            {
+                if (original.characters[i] != null)
+                {
+                    characters[i] = new CharacterInstance(original.characters[i]);
+                }
+            }
         }
         public List<CharacterInstance> GetSingleCharacter(int index)
         {

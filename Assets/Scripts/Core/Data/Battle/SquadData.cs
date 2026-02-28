@@ -1,14 +1,16 @@
 ﻿using Core.Enums;
+using UnityEngine;
 
 namespace Core.Data.Battle
 {
     public class SquadData
     {
+        private string _squadName;
         private CharacterBoard _board;
-        private CharacterFaction _faction;
-        
-        public CharacterBoard Board { get; set; }
+
+        public CharacterBoard Board => _board;
         public CharacterFaction Faction { get; set; }
+        public string SquadName { get; set; }
         
         public SquadData(CharacterBoard board)
         {
