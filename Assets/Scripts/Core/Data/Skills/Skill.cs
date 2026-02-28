@@ -15,18 +15,18 @@ namespace Core.Data.Skills
     public class Skill : IdentifiedObject
     {
         [SerializeField] private SkillType _type;
-        [SerializeField, SingleEnum] private SkillTiming _timing;
+        [SerializeField] [SingleEnum] private SkillTiming _timing;
 
         [SerializeReference] [SubclassSelector]
         private List<ITriggerCondition> _condition;
 
         [SerializeField] private List<SkillAction> _actions;
 
-    
+
         public SkillType Type => _type;
-      
+
         public SkillTiming Timing => _timing;
-        public List<SkillAction> Actions => _actions;   
+        public List<SkillAction> Actions => _actions;
         public IScope Scope => _actions[0].Scope;
 
         public bool IsSatisfyPassiveCondition(CharacterInstance caster, SkillExecutionContext ctx)
@@ -34,7 +34,7 @@ namespace Core.Data.Skills
             if (_condition == null || _condition.Count == 0)
                 return true;
 
-            for (int i = 0; i < _condition.Count; i++)
+            for (var i = 0; i < _condition.Count; i++)
             {
                 var cond = _condition[i];
 

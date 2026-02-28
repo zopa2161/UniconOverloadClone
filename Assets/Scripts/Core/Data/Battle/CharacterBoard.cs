@@ -20,17 +20,14 @@ namespace Core.Data.Battle
             characters = new CharacterInstance[6];
             Debug.Log(original.characters.Length);
             for (var i = 0; i < original.characters.Length; i++)
-            {
                 if (original.characters[i] != null)
-                {
                     characters[i] = new CharacterInstance(original.characters[i]);
-                }
-            }
         }
+
         public List<CharacterInstance> GetSingleCharacter(int index)
         {
             var result = new List<CharacterInstance>();
-            if(characters[index] != null) result.Add(characters[index]);
+            if (characters[index] != null) result.Add(characters[index]);
             return result;
         }
 

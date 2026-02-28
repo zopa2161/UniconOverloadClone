@@ -16,6 +16,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   codeName: ch2
   displayName: 
+  _visualPrefab: {fileID: 1000010854855540, guid: a3c1faf915dc240bca8ed7566d46910c, type: 3}
   _activeSkillData:
   - {fileID: 11400000, guid: 236b22d146b5d044eb04b36f1a24cbf7, type: 2}
   _passiveSkillData:

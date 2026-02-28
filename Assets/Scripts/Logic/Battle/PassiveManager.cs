@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Core.Data.Battle;
 using Core.Data.Character;
 using Core.Data.Skills;
 using Core.Enums;
 using Core.Interfaces;
-using UnityEditorInternal;
-using UnityEngine;
 
 namespace Logic.Battle
 {
@@ -17,10 +14,10 @@ namespace Logic.Battle
         public SkillInstance skill;
         public List<CharacterInstance> targets;
     }
-    
+
     public class PassiveManager
     {
-        private List<CharacterInstance> _allCharacters;
+        private readonly List<CharacterInstance> _allCharacters;
 
 
         public PassiveManager(IBattleContext battleContext)
@@ -31,7 +28,8 @@ namespace Logic.Battle
             _allCharacters = allCharacters.ToList();
         }
 
-        public List<SkillExecutionData> GetPassiveReact(SkillTiming timing, SkillExecutionContext ctx, IBattleContext battleContext)
+        public List<SkillExecutionData> GetPassiveReact(SkillTiming timing, SkillExecutionContext ctx,
+            IBattleContext battleContext)
         {
             var intiativeSorted = _allCharacters.OrderByDescending(x => x.GetStatValue(StatType.Initiative));
             var result = new List<SkillExecutionData>();
@@ -39,10 +37,10 @@ namespace Logic.Battle
             foreach (var character in intiativeSorted)
             {
                 //0. 스킬을 사용할 수 없는 상태라면 패스.
-                if(character.StatSystem.GetStatValue(StatType.PP) <1) continue;
-                
+                if (character.StatSystem.GetStatValue(StatType.PP) < 1) continue;
+
                 var skillSystem = character.SkillSystem;
-                
+
                 foreach (var data in skillSystem.PassiveSkillTacticQueue)
                 {
                     var skill = data.Skill.Data;
@@ -57,7 +55,7 @@ namespace Logic.Battle
                         //Debug.Log($"Passive React {target.Count}");
                         if (target != null && target.Count != 0)
                         {
-                            result.Add(new SkillExecutionData()
+                            result.Add(new SkillExecutionData
                             {
                                 caster = character,
                                 skill = data.Skill,
@@ -66,10 +64,10 @@ namespace Logic.Battle
                             //한 캐릭터당 하나의 패시브 스킬만 허용하므로
                             break;
                         }
-                        
                     }
                 }
             }
+
             //Debug.Log($"Passive React {result.Count}");
             return result;
         }

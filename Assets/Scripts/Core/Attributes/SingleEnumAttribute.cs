@@ -2,9 +2,7 @@
 
 namespace Core.Attributes
 {
-    public class SingleEnumAttribute :PropertyAttribute
+    public class SingleEnumAttribute : PropertyAttribute
     {
-        
-        
     }
 }

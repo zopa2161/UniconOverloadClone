@@ -20,26 +20,29 @@ namespace Core.Data.Targeting
         public TargetingScheme(Skill skill, TacticObject tactic1, TacticObject tactic2)
         {
             _scope = skill.Scope;
-            _tactics.Add(tactic1? tactic1.Tactic : null);
+            _tactics.Add(tactic1 ? tactic1.Tactic : null);
             _tactics.Add(tactic2 ? tactic2.Tactic : null);
         }
 
         public TargetingScheme(TargetingScheme original)
         {
             _scope = original._scope.Clone() as IScope;
-            foreach (var tactic in original._tactics)
-            {
-                _tactics.Add(tactic);
-            }
+            foreach (var tactic in original._tactics) _tactics.Add(tactic);
         }
 
 
         public IScope Scope => _scope;
 
+        public object Clone()
+        {
+            var result = new TargetingScheme(this);
+            return result;
+        }
+
         public List<CharacterInstance> GetTarget(CharacterInstance caster, IBattleContext ctx)
         {
             var candidates = _scope.GetCandidateGroups(caster, ctx);
-            
+
             foreach (var tactic in _tactics)
             {
                 //조기 탈출
@@ -56,12 +59,6 @@ namespace Core.Data.Targeting
             //Debug.Log($"finalGroup  : {finalGroup.Targets[0].Faction}");
             //Debug.Log($"Targeting Scheme Candidates Count : {candidates[0].Targets[0].Faction}");
             return finalGroup.Targets;
-        }
-
-        public object Clone()
-        {
-            var result = new TargetingScheme(this);
-            return result;
         }
     }
 }

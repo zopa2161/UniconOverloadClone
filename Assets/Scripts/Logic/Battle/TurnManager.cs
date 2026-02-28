@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Core.Data.Battle;
 using Core.Data.Character;
 using Core.Enums;
 using Core.Interfaces;
-using UnityEngine;
 
 namespace Logic.Battle
 {
     public class TurnManager
     {
-        private Queue<CharacterInstance> _activeQueue;
-        
+        private readonly Queue<CharacterInstance> _activeQueue;
+
         public TurnManager()
         {
             _activeQueue = new Queue<CharacterInstance>();
@@ -44,9 +42,9 @@ namespace Logic.Battle
 
                 // 큐에 순서대로 삽입
                 foreach (var character in capableCharacters) _activeQueue.Enqueue(character);
-            };
-            
-            
+            }
+
+            ;
         }
 
         public CharacterInstance GetNextActiveCharacter()

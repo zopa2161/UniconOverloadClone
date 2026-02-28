@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Data.Battle.BattleLogs;
 using Core.Data.Character;
 using Core.Data.Effect;
 using Core.Data.Targeting;
@@ -34,13 +35,22 @@ namespace Core.Data.Skills
             return _targetingScheme.GetTarget(caster, ctx);
         }
 
-        public void ExecuteSkillAciton(CharacterInstance caster, CharacterInstance target)
+        public List<BattleLogEvent> ExecuteSkillAciton(CharacterInstance caster, CharacterInstance target)
         {
-            //Debug.Log($"Applying Effect");
+            // 💡 모든 이펙트가 뱉어내는 로그들을 한곳에 모을 '빈 대본 꾸러미'를 만듭니다.
+            List<BattleLogEvent> totalLogs = new List<BattleLogEvent>();
+    
             foreach (var effectOverride in _effectOverrides)
             {
-                effectOverride.EffectActionOverride.ApplyAction(caster, target );
+                // 1. 밑바닥에서 계산을 끝내고 올라온 파편화된 대본(로그 리스트)을 받습니다.
+                var effectNumber = effectOverride.EffectActionOverride.ApplyAction(caster, target);
+                var log = new ApplyEffectLog(effectOverride.Effect, effectNumber, caster, target);
+                totalLogs.Add(log);
+
             }
+
+            // 3. 병합이 완료된 하나의 거대한 대본을 윗선(Action)으로 반환합니다!
+            return totalLogs;
         }
     }
 }

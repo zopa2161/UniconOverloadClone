@@ -7,7 +7,8 @@ namespace Core.Data.Effect
     {
         [SerializeField] private EffectType _type;
 
-        [SerializeReference,SubclassSelector] private EffectAction _action;
+        [SerializeReference] [SubclassSelector]
+        private EffectAction _action;
 
         public EffectType Type => _type;
         public EffectAction Action => _action;

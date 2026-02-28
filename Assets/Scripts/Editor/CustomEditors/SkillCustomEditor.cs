@@ -3,7 +3,6 @@ using Core.Attributes;
 using Core.Data.Effect;
 using Core.Data.Skills;
 using Core.Enums;
-using Core.Interfaces;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -57,13 +56,11 @@ namespace Editor.CustomEditors
                     EditorGUIUtility.singleLineHeight * 2.2f);
                 EditorGUI.HelpBox(helpRect, attr.Text, MessageType.Info);
             };
-            
-
         }
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();  
+            base.OnInspectorGUI();
 
             serializedObject.Update();
 
@@ -98,30 +95,27 @@ namespace Editor.CustomEditors
                     EditorGUILayout.PropertyField(targetingTypeProp,
                         new GUIContent("targeting Type"));
                     if (targetingTypeProp.enumValueIndex == (int)SkillActionTargetingType.CustomScheme)
-                    {
                         EditorGUILayout.PropertyField(skillActionProp.FindPropertyRelative("_targetingScheme"));
-                    }
 
                     var effectOverrideProp = skillActionProp.FindPropertyRelative("_effectOverrides");
                     var beforeSize = effectOverrideProp.arraySize;
                     EditorGUI.BeginChangeCheck();
                     EditorGUILayout.PropertyField(effectOverrideProp);
                     if (EditorGUI.EndChangeCheck())
-                    {
                         if (effectOverrideProp.arraySize > beforeSize)
                         {
                             //effectOverride 객체의 prop lastElement
                             var formerLastElement = effectOverrideProp.GetArrayElementAtIndex(beforeSize - 1);
-                            var lastElement = effectOverrideProp.GetArrayElementAtIndex(effectOverrideProp.arraySize - 1);
-                                
+                            var lastElement =
+                                effectOverrideProp.GetArrayElementAtIndex(effectOverrideProp.arraySize - 1);
+
                             //effectOverride 내부의 actionOverride prop
                             var formerActionProp = formerLastElement.FindPropertyRelative("_effectActionOverride");
                             var actionProp = lastElement.FindPropertyRelative("_effectActionOverride");
                             actionProp.managedReferenceValue =
                                 ((EffectAction)formerActionProp.managedReferenceValue).Clone();
-                            
                         }
-                    }
+
                     EditorGUI.indentLevel -= 1;
                 }
                 EditorGUILayout.EndVertical();
@@ -132,7 +126,6 @@ namespace Editor.CustomEditors
                 var lastArraySize = _actionsProp.arraySize++;
                 var newElementProperty = _actionsProp.GetArrayElementAtIndex(lastArraySize);
                 var prevElementProperty = _actionsProp.GetArrayElementAtIndex(lastArraySize - 1);
-                
             }
         }
     }

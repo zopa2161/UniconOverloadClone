@@ -7,15 +7,18 @@ namespace Core.Data.Battle.BattleLogs
     public class ApplyEffectLog : BattleLogEvent
     {
         public Effect.Effect Effect;
-        public List<CharacterInstance> Targets;
+        public float Effection;
+        public CharacterInstance Target;
 
-        public ApplyEffectLog(Effect.Effect effect, CharacterInstance caster, List<CharacterInstance> targets) :
-            base(BattleLogType.ApplyEffect,caster )
+        public ApplyEffectLog(Effect.Effect effect,float effection, CharacterInstance caster, CharacterInstance target) :
+            base(BattleLogType.ApplyEffect, caster)
         {
+            Effection = effection;
             Effect = effect;
-            Targets = targets;
-            log = $"{caster.Data.CodeName} {caster.Faction} Apply {effect.CodeName} to {targets.Count} targets";
+            Target = target;
+            log = $"{caster.Data.CodeName} {caster.Faction} Apply {effect.CodeName} {effection} to {target.Data.CodeName}";
         }
+
         public ApplyEffectLog(BattleLogType type, CharacterInstance actor) : base(type, actor)
         {
         }

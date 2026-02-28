@@ -105,13 +105,13 @@ namespace Editor.CustomEditors
             var database = databasesByType[dataType];
 
             AssetPreview.SetPreviewTextureCacheSize(Mathf.Max(32, 32 + database.Count));
-            
+
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true), GUILayout.Height(60f));
             {
                 DrawToolbarButton($"New {dataType.Name}", () => CreateNewData(dataType));
             }
             EditorGUILayout.EndHorizontal();
-            
+
             EditorGUILayout.BeginHorizontal();
             {
                 scrollPositionsByType[dataType] = EditorGUILayout.BeginScrollView(scrollPositionsByType[dataType],
@@ -165,7 +165,7 @@ namespace Editor.CustomEditors
                 }
             }
             EditorGUILayout.EndScrollView();
-            
+
             if (selectedObjectsByType[dataType])
             {
                 drawingEditorScrollPosition = EditorGUILayout.BeginScrollView(drawingEditorScrollPosition);
@@ -176,13 +176,10 @@ namespace Editor.CustomEditors
                 }
                 EditorGUILayout.EndScrollView();
             }
-            
+
             EditorGUILayout.EndHorizontal();
-            
-            
-            
         }
-        
+
         private void DrawToolbarButton(string label, Action onClicked)
         {
             var textDimensions = GUI.skin.label.CalcSize(new GUIContent(label));
@@ -194,20 +191,22 @@ namespace Editor.CustomEditors
         {
             var database = databasesByType[dataType];
             var newData = CreateInstance(dataType) as IdentifiedObject;
-            
-            var codeNameField = typeof(IdentifiedObject).GetField("codeName", BindingFlags.NonPublic | BindingFlags.Instance);
-            
+
+            var codeNameField =
+                typeof(IdentifiedObject).GetField("codeName", BindingFlags.NonPublic | BindingFlags.Instance);
+
             var guid = Guid.NewGuid();
             codeNameField.SetValue(newData, guid.ToString());
-            
-            AssetDatabase.CreateAsset(newData, $"Assets/Resources/{dataType.Name}/{dataType.Name.ToUpper()}_{guid}.asset");
-            
+
+            AssetDatabase.CreateAsset(newData,
+                $"Assets/Resources/{dataType.Name}/{dataType.Name.ToUpper()}_{guid}.asset");
+
             database.Add(newData);
-            
+
             EditorUtility.SetDirty(database);
 
             AssetDatabase.SaveAssets();
-            
+
             selectedObjectsByType[dataType] = newData;
         }
     }

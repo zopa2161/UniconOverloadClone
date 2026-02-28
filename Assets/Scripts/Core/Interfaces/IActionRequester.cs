@@ -6,8 +6,5 @@ namespace Core.Interfaces
     {
         void PushSkillSequence(SkillExecutionContext ctx);
         void PushAction(IBattleAction action);
-        
-        
-        
     }
 }

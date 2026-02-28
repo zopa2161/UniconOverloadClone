@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using Core.Data.Battle;
-using Core.Data.Skills;
+﻿using Core.Data.Battle;
 using Core.Enums;
 using Core.Interfaces;
-using PlasticGui.WorkspaceWindow.BranchExplorer;
-using UnityEngine;
 
 namespace Logic.Battle.BattleActions
 {

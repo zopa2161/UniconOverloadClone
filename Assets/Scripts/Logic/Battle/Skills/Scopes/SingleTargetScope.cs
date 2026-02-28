@@ -28,6 +28,7 @@ namespace Logic.Battle.Skills.Scopes
                 if (ch == null || ch.Count == 0) continue;
                 candidates.Add(new TargetGroup(ch));
             }
+
             //Debug.Log($"singleTargetScope : {candidates.Count}");
             return candidates;
         }

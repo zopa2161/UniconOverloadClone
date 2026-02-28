@@ -7,6 +7,5 @@ namespace Core.Interfaces
     public interface IPassiveRequester
     {
         List<SkillExecutionData> RequestPassive(SkillTiming timing, SkillExecutionContext ctx);
-        
     }
 }

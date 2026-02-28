@@ -32,7 +32,6 @@ namespace Core.Data.Stats
             var currentHp = _stats[StatType.HP];
             var newHp = currentHp.Value - damage;
             _stats[StatType.HP].Value = newHp;
-
         }
 
         public void Heal(float heal)
@@ -40,12 +39,11 @@ namespace Core.Data.Stats
             var currentHP = _stats[StatType.HP];
             var newHP = currentHP.Value + heal;
             _stats[StatType.HP].Value = newHP;
-
         }
-        
+
         public void ConsumeSkillPoint(StatType stat, float point)
         {
-            _stats[stat].Value -= point;   
+            _stats[stat].Value -= point;
         }
     }
 }

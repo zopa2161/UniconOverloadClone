@@ -1,27 +1,28 @@
-﻿using Codice.Client.BaseCommands.WkStatus.Printers;
+﻿using System;
 using Core.Enums;
 using UnityEngine;
 
 namespace Core.Data.Stats
 {
-    [System.Serializable]
+    [Serializable]
     public class StatInstance
     {
         private const float _maxValue = 999f;
         private const float _minValue = 0f;
-        
-        [SerializeField] private StatType _type;
-        [SerializeField]
-        private float _value;
 
-        
-        public StatType Type => _type;
+        [SerializeField] private StatType _type;
+
+        [SerializeField] private float _value;
 
         public StatInstance(StatInstance original)
         {
             _type = original._type;
             _value = original._value;
         }
+
+
+        public StatType Type => _type;
+
         public float Value
         {
             get => _value;

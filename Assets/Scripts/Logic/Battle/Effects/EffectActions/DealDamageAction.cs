@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.Attributes;
+using Core.Data.Battle.BattleLogs;
 using Core.Data.Character;
 using Core.Data.Effect;
 using Core.Enums;
-using Core.Interfaces;
 using UnityEngine;
 
 namespace Logic.Battle.Effects.EffectActions
@@ -11,16 +12,24 @@ namespace Logic.Battle.Effects.EffectActions
     [Serializable]
     public class DealDamageAction : EffectAction
     {
-        [SerializeField, EditorContext(EditorContext.SkillEditor)] private float _defaultDamage;
-        [SerializeField, EditorContext(EditorContext.EffectEditor)] private StatType _bonusStatType;
-        [SerializeField, EditorContext(EditorContext.SkillEditor)] private float _bonusFactor;
-        [SerializeField, EditorContext(EditorContext.EffectEditor)] private StatType _defenseStatType;
+        [SerializeField] [EditorContext(EditorContext.SkillEditor)]
+        private float _defaultDamage;
 
-        public override void ApplyAction(CharacterInstance caster, CharacterInstance target)
+        [SerializeField] [EditorContext(EditorContext.EffectEditor)]
+        private StatType _bonusStatType;
+
+        [SerializeField] [EditorContext(EditorContext.SkillEditor)]
+        private float _bonusFactor;
+
+        [SerializeField] [EditorContext(EditorContext.EffectEditor)]
+        private StatType _defenseStatType;
+
+        public override float ApplyAction(CharacterInstance caster, CharacterInstance target)
         {
             //아무튼 복잡한 계산을 해서 최종 데미지를 결정한다
             target.StatSystem.TakeDamage(_defaultDamage);
             //Debug.Log("Damage Dealt");
+            return 0;
         }
 
         public override object Clone()
@@ -31,7 +40,6 @@ namespace Logic.Battle.Effects.EffectActions
             result._bonusFactor = _bonusFactor;
             result._defenseStatType = _defenseStatType;
             return result;
-        
         }
     }
 }

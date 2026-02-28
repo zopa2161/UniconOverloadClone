@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Interfaces;
+﻿using Core.Interfaces;
 using UnityEngine;
 
 namespace Core.Data.Targeting
@@ -10,6 +9,5 @@ namespace Core.Data.Targeting
 
 
         public ITactic Tactic => _tactic;
-        
     }
 }

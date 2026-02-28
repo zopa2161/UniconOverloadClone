@@ -5,16 +5,15 @@ using Core.Data.Character;
 using Core.Data.Skills;
 using Core.Enums;
 using Core.Interfaces;
-using UnityEngine;
 
 namespace Logic.Battle.BattleActions
 {
     public class OnDeclareAction : BattleAction
     {
-        private bool consumeSkillPoint = false;
         public CharacterInstance Caster;
+        private bool consumeSkillPoint;
 
-        private int executeIndex =0;
+        private int executeIndex;
         public SkillInstance Skill;
         public List<CharacterInstance> Targets;
 
@@ -27,7 +26,6 @@ namespace Logic.Battle.BattleActions
             Caster = caster;
             Targets = targets;
             Skill = skill;
-
         }
 
         public override void Execute(IBattleAPI requester, IBattleContext battleContext)
@@ -35,8 +33,8 @@ namespace Logic.Battle.BattleActions
             //0. 스킬 타입을 확인해서 caster의 ap,pp를 소모 시킨다.
             if (!consumeSkillPoint)
             {
-                requester.RecordEvent(new SkillDeclareLog(Caster,Targets, Skill));
-                
+                requester.RecordEvent(new SkillDeclareLog(Caster, Targets, Skill));
+
                 if (Skill.Data.Type == SkillType.Active)
                 {
                     Caster.StatSystem.ConsumeSkillPoint(StatType.AP, 1);
@@ -48,7 +46,7 @@ namespace Logic.Battle.BattleActions
                     consumeSkillPoint = true;
                 }
             }
-           
+
             //Debug.Log($"Execute Declare Action Caster : {Caster.Faction}, {Caster.Data.CodeName} SKill :  {Skill.Data.CodeName}");
             //스킬을 순회하면서 스킬 액션을 뿌려주면 됩니다.
             //1. 스킬액션 꺼내기
@@ -63,8 +61,7 @@ namespace Logic.Battle.BattleActions
             //3.7개의 액션 푸쉬하기.
             requester.PushSkillSequence(context);
             executeIndex++;
-            if(executeIndex == Skill.Data.Actions.Count ) _isFinished = true;
-            
+            if (executeIndex == Skill.Data.Actions.Count) _isFinished = true;
         }
     }
 }
