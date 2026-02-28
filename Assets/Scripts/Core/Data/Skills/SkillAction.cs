@@ -23,6 +23,7 @@ namespace Core.Data.Skills
         public IScope Scope => _targetingScheme.Scope;
 
         public EffectType EffectType => _effectOverrides[0].Effect.Type;
+        public List<EffectOverride> EffectOverrides => _effectOverrides;
 
         public SkillTiming TriggerTiming => _triggerTiming;
 
@@ -35,7 +36,7 @@ namespace Core.Data.Skills
 
         public void ExecuteSkillAciton(CharacterInstance caster, CharacterInstance target)
         {
-            Debug.Log($"Applying Effect");
+            //Debug.Log($"Applying Effect");
             foreach (var effectOverride in _effectOverrides)
             {
                 effectOverride.EffectActionOverride.ApplyAction(caster, target );

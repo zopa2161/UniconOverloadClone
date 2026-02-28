@@ -16,7 +16,7 @@ namespace Logic.Battle.Effects.EffectActions
         {
             //아무튼 어찌저찌 힐량계산
             target.StatSystem.Heal(_defaultHealAmount);
-            Debug.Log("Heal");
+            //Debug.Log("Heal");
         }
         
         public override object Clone()

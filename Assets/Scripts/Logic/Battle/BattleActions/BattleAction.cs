@@ -59,7 +59,7 @@ namespace Logic.Battle.BattleActions
                     safetyCount++;
                     if (safetyCount > 100) break;
                     //if(data.caster.스킬 사용가능해
-                    Debug.Log($"Passive React {data.skill.Data.CodeName}");
+                    //Debug.Log($"Passive React {data.skill.Data.CodeName}");
                     if (data.caster.GetStatValue(StatType.PP) > 0)
                     {
                         _pendingPassivesQueue.Enqueue(data);

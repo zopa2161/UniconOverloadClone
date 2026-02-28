@@ -13,7 +13,7 @@ namespace Logic.Battle.BattleActions
 
         public override void Execute(IBattleAPI requester, IBattleContext ctx)
         {
-            Debug.Log("Execute On OnBefore Action");
+            //Debug.Log("Execute On OnBefore Action");
             PendPassiveQueue(requester, ctx, SkillTiming.BeforeHit);
         }
     }

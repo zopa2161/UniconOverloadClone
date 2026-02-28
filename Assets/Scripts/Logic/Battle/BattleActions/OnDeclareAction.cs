@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.Data.Battle;
+using Core.Data.Battle.BattleLogs;
 using Core.Data.Character;
 using Core.Data.Skills;
 using Core.Enums;
@@ -34,6 +35,8 @@ namespace Logic.Battle.BattleActions
             //0. 스킬 타입을 확인해서 caster의 ap,pp를 소모 시킨다.
             if (!consumeSkillPoint)
             {
+                requester.RecordEvent(new SkillDeclareLog(Caster,Targets, Skill));
+                
                 if (Skill.Data.Type == SkillType.Active)
                 {
                     Caster.StatSystem.ConsumeSkillPoint(StatType.AP, 1);
@@ -46,7 +49,7 @@ namespace Logic.Battle.BattleActions
                 }
             }
            
-            Debug.Log($"Execute Declare Action Caster : {Caster.Faction}, {Caster.Data.CodeName} SKill :  {Skill.Data.CodeName}");
+            //Debug.Log($"Execute Declare Action Caster : {Caster.Faction}, {Caster.Data.CodeName} SKill :  {Skill.Data.CodeName}");
             //스킬을 순회하면서 스킬 액션을 뿌려주면 됩니다.
             //1. 스킬액션 꺼내기
             var skillAction = Skill.Data.Actions[executeIndex];

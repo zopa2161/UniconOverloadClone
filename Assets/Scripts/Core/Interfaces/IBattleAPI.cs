@@ -1,6 +1,6 @@
 ﻿namespace Core.Interfaces
 {
-    public interface IBattleAPI : IActionRequester, IPassiveRequester
+    public interface IBattleAPI : IActionRequester, IPassiveRequester, IBattleLogRequester
     {
         
     }

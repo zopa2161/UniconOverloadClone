@@ -16,7 +16,7 @@ namespace Logic.Battle.BattleActions
 
         public override void Execute(IBattleAPI requester, IBattleContext ctx)
         {
-            Debug.Log("Execute On Targeting Action");
+            //Debug.Log("Execute On Targeting Action");
             PendPassiveQueue(requester, ctx, SkillTiming.OnTargeting);
             //_isFinished = true;
         }

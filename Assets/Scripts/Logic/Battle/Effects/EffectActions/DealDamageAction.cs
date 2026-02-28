@@ -20,7 +20,7 @@ namespace Logic.Battle.Effects.EffectActions
         {
             //아무튼 복잡한 계산을 해서 최종 데미지를 결정한다
             target.StatSystem.TakeDamage(_defaultDamage);
-            Debug.Log("Damage Dealt");
+            //Debug.Log("Damage Dealt");
         }
 
         public override object Clone()

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Core.Data.Battle;
+using Core.Data.Battle.BattleLogs;
 using Core.Enums;
 using Core.Interfaces;
 using Logic.Battle.BattleActions;
@@ -11,11 +12,15 @@ namespace Logic.Battle
     public class BattleManager : IBattleAPI
     {
         private readonly Stack<IBattleAction> actionStack = new();
+
+        private List<BattleLogEvent> _battleLogEvents =new();
         
         private IBattleContext _battleContext;
 
         private TurnManager _turnManager;
         private PassiveManager _passiveManager;
+        
+        public List<BattleLogEvent> BattleLogEvents => _battleLogEvents;
     
 
         public BattleManager(IBattleContext battleContext)
@@ -105,6 +110,12 @@ namespace Logic.Battle
         public List<SkillExecutionData> RequestPassive(SkillTiming timing, SkillExecutionContext ctx)
         {
             return _passiveManager.GetPassiveReact(timing, ctx, _battleContext);
+        }
+
+        public void RecordEvent(BattleLogEvent log)
+        {
+            _battleLogEvents.Add(log);
+            Debug.Log(log.log);
         }
     }
 }
