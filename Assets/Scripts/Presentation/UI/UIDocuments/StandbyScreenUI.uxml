@@ -1,0 +1,29 @@
+﻿<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.75); justify-content: center; align-items: center;">
+
+        <ui:VisualElement style="background-color: rgb(40, 40, 40); width: 800px; height: 500px; border-radius: 15px; padding: 20px; justify-content: space-between; border-color: rgb(200, 180, 100); border-left-width: 4px; border-right-width: 4px; border-top-width: 4px; border-bottom-width: 4px;">
+
+            <ui:Label text="⚔️ 전투 대기 (Standby) ⚔️" style="color: rgb(255, 255, 255); font-size: 32px; -unity-font-style: bold; align-self: center; margin-top: 10px;" />
+
+            <ui:VisualElement style="flex-direction: row; justify-content: space-around; align-items: center; flex-grow: 1; margin-top: 20px;">
+
+                <ui:VisualElement style="align-items: center; width: 30%;">
+                    <ui:Label text="Player Squad" name="player-squad-name" style="color: rgb(120, 200, 255); font-size: 24px; -unity-font-style: bold; margin-bottom: 20px;" />
+                    <ui:VisualElement style="width: 150px; height: 150px; background-color: rgb(50, 60, 80); border-radius: 10px; border-color: rgb(100, 150, 200); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px;" />
+                </ui:VisualElement>
+
+                <ui:Label text="VS" style="color: rgb(255, 80, 80); font-size: 50px; -unity-font-style: bold; -unity-text-outline-width: 2px; -unity-text-outline-color: rgb(0, 0, 0);" />
+
+                <ui:VisualElement style="align-items: center; width: 30%;">
+                    <ui:Label text="Enemy Squad" name="enemy-squad-name" style="color: rgb(255, 150, 120); font-size: 24px; -unity-font-style: bold; margin-bottom: 20px;" />
+                    <ui:VisualElement style="width: 150px; height: 150px; background-color: rgb(80, 40, 40); border-radius: 10px; border-color: rgb(200, 100, 100); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px;" />
+                </ui:VisualElement>
+
+            </ui:VisualElement>
+
+            <ui:Button text="전투 개시!" name="start-battle-btn" style="height: 70px; font-size: 28px; -unity-font-style: bold; background-color: rgb(180, 40, 40); color: rgb(255, 255, 255); border-radius: 10px; margin-top: 20px; transition-duration: 0.1s;" />
+
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

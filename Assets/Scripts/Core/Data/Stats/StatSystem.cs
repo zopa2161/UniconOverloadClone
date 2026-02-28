@@ -19,7 +19,7 @@ namespace Core.Data.Stats
         //복사 생성자
         public StatSystem(StatSystem original)
         {
-            foreach (var instance in original._stats) _stats[instance.Key] = instance.Value;
+            foreach (var instance in original._stats) _stats[instance.Key] = new StatInstance(instance.Value);
         }
 
         public float GetStatValue(StatType stat)

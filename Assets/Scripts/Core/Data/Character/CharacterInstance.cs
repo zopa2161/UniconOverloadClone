@@ -26,6 +26,7 @@ namespace Core.Data.Character
         public CharacterInstance(CharacterInstance original) : base(original)
         {
             _statSystem = new StatSystem(original._statSystem);
+            _skillSystem = new SkillSystem(original._skillSystem, this);
         }
 
         public CharacterFaction Faction { get; set; }
