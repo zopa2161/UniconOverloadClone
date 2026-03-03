@@ -49,10 +49,11 @@ namespace Logic.Battle
                     //1. 타이밍이 맞는가? 2. 조건이 맞는가?
                     if (timing == skill.Timing && skill.IsSatisfyPassiveCondition(character, ctx))
                     {
-                        //Debug.Log($"Passive React {skill.CodeName}");
                         // //3. 타이밍과 조건이 맞으면 타겟 만들기.
-                        var target = data.GetTarget(character, battleContext);
-                        //Debug.Log($"Passive React {target.Count}");
+                        var target = data.GetTarget(character, battleContext, ctx);
+                        
+                        //외부 설정 tactic에 의하여 적절한 타겟이 존재하지 않는다면 pass
+                        //만약 외부 설정 tactic이 있더라도, 내부적으로 고정된 타겟이 있다면 무시하고 내부의 타겟으로 사용.
                         if (target != null && target.Count != 0)
                         {
                             result.Add(new SkillExecutionData

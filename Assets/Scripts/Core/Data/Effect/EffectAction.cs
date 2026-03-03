@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using Core.Data.Battle.BattleLogs;
+using Core.Data.Battle;
 using Core.Data.Character;
 
 namespace Core.Data.Effect
@@ -10,6 +9,6 @@ namespace Core.Data.Effect
     {
         private ICloneable _cloneableImplementation;
         public abstract object Clone();
-        public abstract float ApplyAction(CharacterInstance caster, CharacterInstance target);
+        public abstract float ApplyAction(CharacterInstance caster, CharacterInstance target, SkillExecutionContext skillContext);
     }
 }

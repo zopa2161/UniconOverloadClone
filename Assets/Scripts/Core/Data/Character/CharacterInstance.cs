@@ -9,7 +9,7 @@ namespace Core.Data.Character
         //From SO
         public CharacterInstance(CharacterData data) : base(data)
         {
-            StatSystem = new StatSystem(data.StatData);
+            StatSystem = new StatSystem(this, data.StatData);
             SkillSystem = new SkillSystem(this, data.ActiveSkillData, data.PassiveSkillData);
         }
 

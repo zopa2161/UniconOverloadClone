@@ -18,17 +18,17 @@ MonoBehaviour:
   displayName: 
   _visualPrefab: {fileID: 1000010854855540, guid: a3c1faf915dc240bca8ed7566d46910c, type: 3}
   _activeSkillData:
-  - {fileID: 11400000, guid: 236b22d146b5d044eb04b36f1a24cbf7, type: 2}
+  - {fileID: 11400000, guid: 38bad75db962e2046aeb507b9a4bfea6, type: 2}
   _passiveSkillData:
-  - {fileID: 11400000, guid: 2e20d705e822a7445b45164ad23d2022, type: 2}
+  - {fileID: 11400000, guid: 4983128f379076140a62a925c5c2a26e, type: 2}
   _statData:
   - _type: 0
-    _value: 10
+    _value: 3
   - _type: 1
-    _value: 10
+    _value: 3
   - _type: 2
-    _value: 1
+    _value: 2
   - _type: 3
-    _value: 1
+    _value: 2
   - _type: 14
-    _value: 1
+    _value: 2

@@ -6,15 +6,13 @@ namespace Logic.Battle.BattleActions
 {
     public class OnTargetingAction : BattleAction
     {
-        public OnTargetingAction(SkillExecutionContext ctx) : base(ctx)
+        public OnTargetingAction(SkillExecutionContext skillContext) : base(skillContext)
         {
         }
 
-        public override void Execute(IBattleAPI requester, IBattleContext ctx)
+        public override void Execute(IBattleAPI requester, IBattleContext battleContext)
         {
-            //Debug.Log("Execute On Targeting Action");
-            PendPassiveQueue(requester, ctx, SkillTiming.OnTargeting);
-            //_isFinished = true;
+            PendPassiveQueue(requester, battleContext, SkillTiming.OnTargeting);
         }
     }
 }

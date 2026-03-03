@@ -1,4 +1,5 @@
-﻿using Core.Data.Character;
+﻿using System;
+using Core.Data.Character;
 using Core.Enums;
 
 namespace Core.Data.Battle.BattleLogs
@@ -12,6 +13,11 @@ namespace Core.Data.Battle.BattleLogs
         {
             Type = type;
             Actor = actor;
+        }
+
+        protected BattleLogEvent()
+        {
+            throw new NotImplementedException();
         }
 
         public BattleLogType Type { get; protected set; }

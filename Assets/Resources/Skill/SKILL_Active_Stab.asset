@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a6a58359e4a482987e8a871074f4fcb, type: 3}
-  m_Name: SKILL_Active1
+  m_Name: SKILL_Active_Stab
   m_EditorClassIdentifier: Game.Core::Core.Data.Skills.Skill
-  id: 0
+  id: 7
   icon: {fileID: 0}
-  codeName: Active1
+  codeName: Active_Stab
   displayName: 
   _type: 0
   _timing: 0
@@ -23,48 +23,29 @@ MonoBehaviour:
   - _targetingType: 0
     _targetingScheme:
       _scope:
-        rid: 2035419775026856012
+        rid: 2620909218336342091
       _tactics: []
     _effectOverrides:
     - _effect: {fileID: 11400000, guid: 60d6d67bd6d0de341a8a69626ba663df, type: 2}
       _effectActionOverride:
-        rid: 2035419815576338510
-    _triggerTiming: -1
-  - _targetingType: 1
-    _targetingScheme:
-      _scope:
-        rid: 2035419815576338513
-      _tactics:
-      - rid: 2035419815576338508
-    _effectOverrides:
-    - _effect: {fileID: 11400000, guid: ec29f33d61d766746a497df2eef8e3df, type: 2}
+        rid: 2620909225020751957
+    - _effect: {fileID: 11400000, guid: 60d6d67bd6d0de341a8a69626ba663df, type: 2}
       _effectActionOverride:
-        rid: 2035419815576338514
-    _triggerTiming: 0
+        rid: 2620909225020751957
+    _triggerTiming: -1
+    isContinutive: 0
+    _isConsumePoint: 1
   references:
     version: 2
     RefIds:
-    - rid: 2035419775026856012
+    - rid: 2620909218336342091
       type: {class: SingleTargetScope, ns: Logic.Battle.Skills.Scopes, asm: Game.Logic}
       data:
         _isFriendly: 0
-    - rid: 2035419815576338508
-      type: {class: LowestHpTargetTactic, ns: Logic.Battle.Skills.Tactics, asm: Game.Logic}
-      data: 
-    - rid: 2035419815576338510
+    - rid: 2620909225020751957
       type: {class: DealDamageAction, ns: Logic.Battle.Effects.EffectActions, asm: Game.Logic}
       data:
         _defaultDamage: 1
         _bonusStatType: 4
         _bonusFactor: 0
         _defenseStatType: 9
-    - rid: 2035419815576338513
-      type: {class: SingleTargetScope, ns: Logic.Battle.Skills.Scopes, asm: Game.Logic}
-      data:
-        _isFriendly: 1
-    - rid: 2035419815576338514
-      type: {class: HealAction, ns: Logic.Battle.Effects.EffectActions, asm: Game.Logic}
-      data:
-        _defaultHealAmount: 0
-        _bonusStatType: 5
-        _bonusFactor: 0

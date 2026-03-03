@@ -27,13 +27,13 @@ namespace Core.Data.Battle
         public List<CharacterInstance> GetSingleCharacter(int index)
         {
             var result = new List<CharacterInstance>();
-            if (characters[index] != null) result.Add(characters[index]);
+            if (characters[index] != null && !characters[index].IsDead) result.Add(characters[index]);
             return result;
         }
 
         public List<CharacterInstance> GetAllCharacters()
         {
-            return characters.Where(c => c != null).ToList();
+            return characters.Where(c => c is { IsDead: false }).ToList();
         }
 
         /// <summary>
@@ -48,8 +48,8 @@ namespace Core.Data.Battle
             var frontIndex = index;
             var backIndex = index + 3;
 
-            if (characters[frontIndex] != null) result.Add(characters[frontIndex]);
-            if (characters[backIndex] != null) result.Add(characters[backIndex]);
+            if (characters[frontIndex] != null && !characters[frontIndex].IsDead) result.Add(characters[frontIndex]);
+            if (characters[backIndex] != null && !characters[backIndex].IsDead) result.Add(characters[backIndex]);
 
             return result;
         }
@@ -68,10 +68,16 @@ namespace Core.Data.Battle
             for (var i = 0; i < 3; i++)
             {
                 var currentIndex = startIndex + i;
-                if (characters[currentIndex] != null) result.Add(characters[currentIndex]);
+                if (characters[currentIndex] != null && !characters[currentIndex].IsDead)
+                    result.Add(characters[currentIndex]);
             }
 
             return result;
+        }
+
+        public bool IsAllDead()
+        {
+            return GetAllCharacters().All(c => c.IsDead);
         }
     }
 }

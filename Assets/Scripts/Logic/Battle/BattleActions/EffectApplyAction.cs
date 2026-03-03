@@ -1,28 +1,40 @@
 ﻿using Core.Data.Battle;
-using Core.Data.Battle.BattleLogs;
+using Core.Enums;
 using Core.Interfaces;
 
 namespace Logic.Battle.BattleActions
 {
     public class EffectApplyAction : BattleAction
     {
-        public EffectApplyAction(SkillExecutionContext ctx) : base(ctx)
+        public EffectApplyAction(SkillExecutionContext skillContext) : base(skillContext)
         {
         }
 
-        public override void Execute(IBattleAPI requester, IBattleContext ctx)
+        public override void Execute(IBattleAPI requester, IBattleContext battleContext)
         {
-          
-            foreach (var target in _ctx.targets)
+            if (_skillContext.caster.IsDead)
             {
-                //Debug.Log($"Skill Execute Target Check : {target.Faction} {target.Data.CodeName}");
-                var logs = _ctx.SkillAction.ExecuteSkillAciton(_ctx.caster, target);
+                _isFinished = true;
+                return;
+            }
 
-                foreach (var log in logs)
-                {
-                    requester.RecordEvent(log);
-                }
-               
+            //0. 스킬 타입을 확인해서 caster의 ap,pp를 소모 시킨다.
+
+            if (!_skillContext.HasConsumedPoint)
+            {
+                //Debug.Log("consuming at preBattle");
+                if (_skillContext.Skill.Type == SkillType.Active)
+                    _skillContext.caster.StatSystem.ConsumeSkillPoint(StatType.AP, 1);
+                else if (_skillContext.Skill.Type == SkillType.Passive) _skillContext.caster.StatSystem.ConsumeSkillPoint(StatType.PP, 1);
+                _skillContext.HasConsumedPoint = true;
+            }
+
+            var logs = _skillContext.SkillAction.ExecuteSkillAciton(_skillContext.caster, _skillContext.targets ,_skillContext);
+            logs[0].LateConsumeInjection();
+            foreach (var log in logs)
+            {
+                log.LateSkillInjection(_skillContext.Skill);
+                requester.RecordEvent(log);
             }
 
             _isFinished = true;

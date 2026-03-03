@@ -8,7 +8,7 @@ namespace Logic.Battle.BattleActions
 {
     public abstract class BattleAction : IBattleAction
     {
-        protected SkillExecutionContext _ctx;
+        protected SkillExecutionContext _skillContext;
 
         protected List<SkillInstance> _executedPassiveSkills;
 
@@ -16,9 +16,9 @@ namespace Logic.Battle.BattleActions
 
         protected Queue<SkillExecutionData> _pendingPassivesQueue;
 
-        public BattleAction(SkillExecutionContext ctx)
+        public BattleAction(SkillExecutionContext skillContext)
         {
-            _ctx = ctx;
+            _skillContext = skillContext;
         }
 
         protected BattleAction()
@@ -29,11 +29,17 @@ namespace Logic.Battle.BattleActions
 
         public bool IsFinished => _isFinished;
 
-        public abstract void Execute(IBattleAPI requester, IBattleContext ctx);
+        public abstract void Execute(IBattleAPI requester, IBattleContext battleContext);
 
-        protected void PendPassiveQueue(IBattleAPI requester, IBattleContext ctx, SkillTiming timing)
+        protected void PendPassiveQueue(IBattleAPI requester, IBattleContext battleContext, SkillTiming timing)
         {
-            var isMatched = _ctx.SkillAction.TriggerTiming.HasFlag(timing);
+            if (_skillContext != null && _skillContext.caster.IsDead)
+            {
+                _isFinished = true;
+                return;
+            }
+
+            var isMatched = _skillContext.SkillAction.TriggerTiming.HasFlag(timing);
             //Debug.Log($"비트마스크: {_ctx.SkillAction.TriggerTiming}, 들어온값: {timing}, 매칭결과: {isMatched}");
 
             if (!isMatched)
@@ -48,23 +54,20 @@ namespace Logic.Battle.BattleActions
                 _pendingPassivesQueue = new Queue<SkillExecutionData>();
 
 
-                var passiveReactors = requester.RequestPassive(timing, _ctx);
-                var safetyCount = 0;
+                var passiveReactors = requester.RequestPassive(timing, _skillContext);
+
 
                 foreach (var data in passiveReactors)
-                {
-                    safetyCount++;
-                    if (safetyCount > 100) break;
                     //if(data.caster.스킬 사용가능해
                     //Debug.Log($"Passive React {data.skill.Data.CodeName}");
-                    if (data.caster.GetStatValue(StatType.PP) > 0) _pendingPassivesQueue.Enqueue(data);
-                }
+                    if (data.caster.GetStatValue(StatType.PP) > 0)
+                        _pendingPassivesQueue.Enqueue(data);
             }
 
             if (_pendingPassivesQueue.Count > 0)
             {
                 var pending = _pendingPassivesQueue.Dequeue();
-                var declareAction = new OnDeclareAction(pending.caster, pending.targets, pending.skill);
+                var declareAction = new OnDeclareAction(pending.caster, pending.targets, pending.skill, _skillContext);
                 var battleManager = requester as BattleManager;
                 battleManager.PushAction(declareAction);
             }

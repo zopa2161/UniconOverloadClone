@@ -17,6 +17,7 @@ MonoBehaviour:
   codeName: Heal
   displayName: 
   _type: 2
+  _rangeType: 1
   _action:
     rid: 2035419815576338506
   references:

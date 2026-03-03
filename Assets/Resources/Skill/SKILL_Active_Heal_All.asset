@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a6a58359e4a482987e8a871074f4fcb, type: 3}
+  m_Name: SKILL_Active_Heal_All
+  m_EditorClassIdentifier: Game.Core::Core.Data.Skills.Skill
+  id: 4
+  icon: {fileID: 0}
+  codeName: Active_Heal_All
+  displayName: 
+  _type: 0
+  _timing: 0
+  _condition: []
+  _actions:
+  - _targetingType: 0
+    _targetingScheme:
+      _scope:
+        rid: 2620909216980533323
+      _tactics: []
+    _effectOverrides:
+    - _effect: {fileID: 11400000, guid: ec29f33d61d766746a497df2eef8e3df, type: 2}
+      _effectActionOverride:
+        rid: 2620909225020751947
+    _triggerTiming: -1
+    isContinutive: 0
+    _isConsumePoint: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 2620909216980533323
+      type: {class: AllTargetScope, ns: Logic.Battle.Skills.Scopes, asm: Game.Logic}
+      data:
+        _isFriendly: 1
+    - rid: 2620909225020751947
+      type: {class: HealAction, ns: Logic.Battle.Effects.EffectActions, asm: Game.Logic}
+      data:
+        _defaultHealAmount: 1
+        _bonusStatType: 5
+        _bonusFactor: 0

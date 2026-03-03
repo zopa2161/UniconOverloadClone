@@ -9,5 +9,7 @@ namespace Core.Interfaces
         List<CharacterInstance> GetAllCharacters();
         List<CharacterInstance> GetCharacterAtRow(int index);
         List<CharacterInstance> GetCharacterAtColumn(int index);
+
+        bool IsAllDead();
     }
 }

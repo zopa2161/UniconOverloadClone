@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Core.Attributes;
-using Core.Data.Battle.BattleLogs;
+using Core.Data.Battle;
 using Core.Data.Character;
 using Core.Data.Effect;
 using Core.Enums;
@@ -24,12 +23,12 @@ namespace Logic.Battle.Effects.EffectActions
         [SerializeField] [EditorContext(EditorContext.EffectEditor)]
         private StatType _defenseStatType;
 
-        public override float ApplyAction(CharacterInstance caster, CharacterInstance target)
+        public override float ApplyAction(CharacterInstance caster, CharacterInstance target, SkillExecutionContext skillContext)
         {
             //아무튼 복잡한 계산을 해서 최종 데미지를 결정한다
             target.StatSystem.TakeDamage(_defaultDamage);
-            //Debug.Log("Damage Dealt");
-            return 0;
+            Debug.Log($"caster : {caster.Data.CodeName} target : {target.Data.CodeName} Damage Dealt");
+            return _defaultDamage;
         }
 
         public override object Clone()

@@ -6,6 +6,7 @@ using Core.Enums;
 using Core.Interfaces;
 using Logic.Battle;
 using Presentation.Battle.Characters;
+using Presentation.UI;
 using UnityEngine;
 
 namespace Presentation.Battle
@@ -16,11 +17,15 @@ namespace Presentation.Battle
         [SerializeField] private Transform[] _friendlySpawn;
         [SerializeField] private Transform[] _enemySpawn;
 
-        private BattleManager _battleManager;
+        [SerializeField] private Transform _midCenter;
+
+        [SerializeField] private BattleUIManager _uiManager;
 
         // 🌟 핵심: 영혼(Logic Data)과 육체(View)를 연결해두는 명부(Cache)
-        private Dictionary<CharacterInstance, CharacterView> _viewCache =
-            new Dictionary<CharacterInstance, CharacterView>();
+        private readonly Dictionary<CharacterInstance, CharacterView> _viewCache = new();
+
+
+        private BattleManager _battleManager;
 
         public void Initialize(BattleManager battleManager)
         {
@@ -46,7 +51,7 @@ namespace Presentation.Battle
                 var viewObj = Instantiate(_characterPrefab, _friendlySpawn[f]);
                 var view = viewObj.GetComponent<CharacterView>();
 
-                view.Initialize(character);
+                view.Initialize(character, spawnPoint: _friendlySpawn[f]);
 
                 var depthGroup = f % 3;
                 view.SetSortingOrder(10 - depthGroup);
@@ -64,7 +69,7 @@ namespace Presentation.Battle
                 var viewObj = Instantiate(_characterPrefab, _enemySpawn[e]);
                 var view = viewObj.GetComponent<CharacterView>();
 
-                view.Initialize(character, true);
+                view.Initialize(character, true, _enemySpawn[e]);
 
                 var depthGroup = e % 3;
                 view.SetSortingOrder(10 - depthGroup);
@@ -82,8 +87,8 @@ namespace Presentation.Battle
             //Debug.LogWarning($"[BattleViewManager] 앗! 명부에 없는 캐릭터입니다: {instance.Data.CharacterName}");
             return null;
         }
-        
-        
+
+
         public IEnumerator PlayBattleRoutine(List<BattleLogEvent> logs)
         {
             Debug.Log("🎬 [연출 시작] 대본 리딩을 시작합니다!");
@@ -93,44 +98,97 @@ namespace Presentation.Battle
                 Debug.Log($"[▶ 재생중] {logEvent.log}");
 
                 // 🌟 패턴 매칭: logEvent가 ApplyEffectLog라면, effectLog라는 변수로 즉시 캐스팅해서 사용합니다.
-                if (logEvent is ApplyEffectLog effectLog)
+                if (logEvent is SkillDeclareLog skillDeclareLog)
+                {
+                    var actorView = GetViewFromInstance(skillDeclareLog.Actor);
+                    if (actorView != null)
+                    {
+                    }
+
+                    yield return new WaitForSeconds(1.0f);
+                }
+                else if (logEvent is ApplyEffectLog effectLog)
                 {
                     var actorView = GetViewFromInstance(effectLog.Actor);
-                    var targetView = GetViewFromInstance(effectLog.Target);
-                
+                    if (effectLog.isConsume)
+                    {
+                        Debug.Log("consuming");
+                        if (effectLog.Skill.Type == SkillType.Active)
+                            actorView.ConsumeVisualAP(); // AP 1 소모 (기획에 따라 소모량 조절)
+                        else if (effectLog.Skill.Type == SkillType.Passive) actorView.ConsumeVisualPP(); // PP 1 소모
+                    }
+
+                    var targetViews = new List<CharacterView>();
+                    if (_uiManager != null) _uiManager.ShowSkillName(effectLog.Skill.CodeName); // 스킬 이름 데이터 접근
+                    foreach (var target in effectLog.Targets)
+                    {
+                        var t = GetViewFromInstance(target);
+                        if (t != null) targetViews.Add(t);
+                    }
+
                     var effect = ((ApplyEffectLog)logEvent).Effect;
                     // EffectType에 따라 배우들의 연기를 지시합니다.
                     switch (effect.Type) // (이름이 Type이라면 effectLog.Type으로 수정)
                     {
+                        ///
+                        /// 지금은 단순히 타입에 따라서 분기를 하지만 나중 가서는 이펙트 내부의 함수를 이용해서
+                        /// 값을 정하는 방식으로 해야함.
+                        /// 이런식으로 어택/ 힐 을 뭉뚱거리는건 말도 안되지;
                         case EffectType.Attack:
                             if (actorView != null) actorView.PlayAttackAnimation();
-                            if (targetView != null) targetView.PlayHitEffect(); // 맞는 연출 추가!
+                            for (var t = 0; t < targetViews.Count; t++)
+                            {
+                                if (targetViews[t] != null) targetViews[t].PlayHitEffect();
+                                targetViews[t].TakeVisualHP(-(int)effectLog.Effections[t]);
+                            }
+
                             break;
-                    
+
                         case EffectType.Heal:
-                            if (actorView != null) actorView.PlaySimpleActionEffect(); // 힐 시전 모션
-                            //if (targetView != null) targetView.PlayHealEffect(); // 초록색 반짝임
+                            if (actorView != null) actorView.PlayCastingAnimation(); // 힐 시전 모션
+                            for (var t = 0; t < targetViews.Count; t++)
+                            {
+                                if (targetViews[t] != null) targetViews[t].PlayHealEffect();
+                                targetViews[t].TakeVisualHP((int)effectLog.Effections[t]);
+                            }
+
                             break;
-                    
+
                         // 필요에 따라 Buff, Debuff 등 추가...
                     }
                 }
                 // ApplyEffectLog가 아닌 다른 일반 로그(예: 턴 시작, 이동 등)일 경우
-                else 
+                else if (logEvent is BeforeHitLog beforeHitLog)
                 {
-                    if (logEvent.Actor != null)
+                    var actorView = GetViewFromInstance(beforeHitLog.Actor);
+                    if (actorView != null)
+                        if (beforeHitLog.effet.RangeType == EffectRangeType.Melee)
+                            actorView.MoveToTarget(_midCenter);
+                }
+                else if (logEvent is AfterHitLog afterHitLog)
+                {
+                    var actorView = GetViewFromInstance(afterHitLog.Actor);
+                    if (actorView != null)
                     {
-                        var actorView = GetViewFromInstance(logEvent.Actor);
-                        if (actorView != null) actorView.PlaySimpleActionEffect();
+                        actorView.ReturnToSpawnPoint();
+                        if (_uiManager != null) _uiManager.OffSkillName();
+                    }
+                }
+                else if (logEvent is CharacterDeathLog deathLog)
+                {
+                    var actorView = GetViewFromInstance(deathLog.Actor);
+                    if (actorView != null)
+                    {
+                        actorView.CharacterDeath();
+                        Debug.Log("Character Death");
                     }
                 }
 
                 // 3. 핵심: 다음 로그로 넘어가기 전에 1초 대기! 
-                yield return new WaitForSeconds(1.0f); 
+                yield return new WaitForSeconds(0.5f);
             }
 
             Debug.Log("🏁 [연출 종료] 모든 전투 연출이 끝났습니다!");
         }
     }
 }
-

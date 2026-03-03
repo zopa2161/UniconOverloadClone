@@ -9,8 +9,10 @@ namespace Core.Data.Battle
         public CharacterInstance caster;
 
         public int contextDepth;
-        public List<CharacterInstance> targets;
 
+        public bool HasConsumedPoint = false;
+
+        public List<CharacterInstance> targets;
 
         public SkillExecutionContext(Skill skill, SkillAction skillAction, CharacterInstance caster,
             List<CharacterInstance> targets, SkillExecutionContext parentContext = null)

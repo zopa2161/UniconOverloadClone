@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:Label name="ap-label" text="AP: 3"
+              style="position: absolute; font-size: 20px; color: red; -unity-font-style: bold; -unity-text-outline-width: 1px; -unity-text-outline-color: black;"/>
+</ui:UXML>

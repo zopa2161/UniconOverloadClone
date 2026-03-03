@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Core.Data.Battle;
 using Core.Data.Battle.BattleLogs;
+using Core.Data.Character;
 using Core.Enums;
 using Core.Interfaces;
 using Logic.Battle.BattleActions;
@@ -20,6 +21,11 @@ namespace Logic.Battle
         {
             BattleContext = battleContext;
 
+            var freindly = battleContext.friendlyBoard.GetAllCharacters();
+            foreach (var character in freindly) character.StatSystem.HpValueChanged += OnCharacterHPChanged;
+
+            foreach (var charater in battleContext.enemyBoard.GetAllCharacters())
+                charater.StatSystem.HpValueChanged += OnCharacterHPChanged;
             _turnManager = new TurnManager();
             _passiveManager = new PassiveManager(battleContext);
         }
@@ -31,7 +37,8 @@ namespace Logic.Battle
         public void PushSkillSequence(SkillExecutionContext ctx)
         {
             //일련의 스킬 액션들을 역순으로 밀어넣기.
-
+            PushAction(new OnAfterHitAction(ctx));
+            PushAction(new OnHitAction(ctx));
             PushAction(new EffectApplyAction(ctx));
             PushAction(new OnBeforeHitAction(ctx));
             PushAction(new OnTargetingAction(ctx));
@@ -51,7 +58,6 @@ namespace Logic.Battle
         public void RecordEvent(BattleLogEvent log)
         {
             BattleLogEvents.Add(log);
-            //Debug.Log(log.log);
         }
 
 
@@ -61,7 +67,7 @@ namespace Logic.Battle
             var safetyCount = 0;
 
             _turnManager.SetupNewBattle(BattleContext);
-
+            PushAction(new OnBattleStartAction());
             while (true)
             {
                 if (actionStack.Count == 0)
@@ -74,10 +80,11 @@ namespace Logic.Battle
                     }
 
                     // 여기서 선택된 캐스터가 액티브 스킬을 사용할 수 있는 상태인지 판단해야함.
+
                     //사용할 수 없는 상태라면 pass.
-                    if (caster.StatSystem.GetStatValue(StatType.AP) < 1)
+                    if (caster.StatSystem.GetStatValue(StatType.AP) < 1 || caster.IsDead)
                     {
-                        Debug.Log($"{caster.Faction} do not have ap. skip Active Skill");
+                        Debug.Log($"{caster.Faction} can not cast active Skill");
                         continue;
                     }
 
@@ -87,17 +94,23 @@ namespace Logic.Battle
                         var target = skillTacticData.GetTarget(caster, BattleContext);
                         if (target.Count == 0 || target == null) continue;
                         //Debug.Log($"Target : {target[0]}");
-                        var declareAction = new OnDeclareAction(caster, target, skillTacticData.Skill);
+                        var declareAction = new OnDeclareAction(caster, target, skillTacticData.Skill, null);
                         //리액션 스택에 넣고 break
                         actionStack.Push(declareAction);
                         break;
                     }
                 }
 
+                safetyCount++;
                 while (actionStack.Count > 0)
                 {
                     safetyCount++;
-                    if (safetyCount > 100) break;
+                    if (safetyCount > 1000)
+                    {
+                        Debug.LogError("Saftey Count Over Flow");
+                        break;
+                    }
+
                     var lastStack = actionStack.Peek();
                     if (lastStack.IsFinished)
                         //Debug.Log($"Action Stack Pop {lastStack.GetType().Name}");
@@ -105,7 +118,23 @@ namespace Logic.Battle
                     else
                         lastStack.Execute(this, BattleContext);
                 }
+
+                if (safetyCount > 1000)
+                {
+                    Debug.LogError("Saftey Count Over Flow");
+                    break;
+                }
+
+                if (BattleContext.friendlyBoard.IsAllDead() || BattleContext.enemyBoard.IsAllDead()) break;
             }
+        }
+
+        private void OnCharacterHPChanged(CharacterInstance character, float value)
+        {
+            //Debug.Log($"Character {character.Faction} {character.Data.CodeName} HP {value}");
+            //만약 value가 0 이면 뒤졌다는거니까
+            if (value < 0.99) RecordEvent(new CharacterDeathLog(character));
+            //  Debug.Log($"Character {character.Faction} {character.Data.CodeName} Die");
         }
     }
 }

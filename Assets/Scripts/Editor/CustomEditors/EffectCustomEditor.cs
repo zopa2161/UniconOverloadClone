@@ -9,6 +9,7 @@ namespace Editor.CustomEditors
     public class EffectCustomEditor : IdentifiedObjectEditor
     {
         private SerializedProperty _actionProp;
+        private SerializedProperty _rangeTypeProp;
         private SerializedProperty _typeProp;
 
         private void OnEnable()
@@ -18,6 +19,7 @@ namespace Editor.CustomEditors
             EditorContextHelper.CurrentContext = EditorContext.EffectEditor;
             _typeProp = serializedObject.FindProperty("_type");
             _actionProp = serializedObject.FindProperty("_action");
+            _rangeTypeProp = serializedObject.FindProperty("_rangeType");
         }
 
 
@@ -27,6 +29,7 @@ namespace Editor.CustomEditors
             serializedObject.Update();
 
             EditorGUILayout.PropertyField(_typeProp);
+            EditorGUILayout.PropertyField(_rangeTypeProp);
 
             EditorGUILayout.Space(6);
 

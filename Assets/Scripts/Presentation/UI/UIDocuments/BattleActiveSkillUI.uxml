@@ -1,0 +1,11 @@
+﻿<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:VisualElement
+            style="flex-grow: 1; align-items: center; justify-content: flex-start; padding-top: 100px; picking-mode: Ignore;">
+
+        <ui:Label name="skill-name-label" text="스킬 이름"
+                  style="font-size: 50px; -unity-font-style: bold; color: rgb(255, 230, 100); -unity-text-outline-width: 3px; -unity-text-outline-color: rgb(0, 0, 0); background-color: rgba(0, 0, 0, 0.5); padding: 10px 30px; border-radius: 15px; display: none;"/>
+        <ui:Label name="passive-label" text="스킬 이름"
+                  style="font-size: 20px; -unity-font-style: bold; color: rgb(255, 230, 100); -unity-text-outline-width: 3px; -unity-text-outline-color: rgb(0, 0, 0); background-color: rgba(0, 0, 0, 0.5); padding: 10px 30px; border-radius: 15px; display: none;"/>
+
+    </ui:VisualElement>
+</ui:UXML>

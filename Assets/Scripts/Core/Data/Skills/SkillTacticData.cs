@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core.Data.Battle;
 using Core.Data.Character;
 using Core.Data.Targeting;
 using Core.Interfaces;
@@ -25,9 +26,10 @@ namespace Core.Data.Skills
 
         public SkillInstance Skill { get; }
 
-        public List<CharacterInstance> GetTarget(CharacterInstance caster, IBattleContext ctx)
+        public List<CharacterInstance> GetTarget(CharacterInstance caster, IBattleContext ctx,
+            SkillExecutionContext skillContext = null)
         {
-            var result = _targetingScheme.GetTarget(caster, ctx);
+            var result = _targetingScheme.GetTarget(caster, ctx, skillContext);
             //Debug.Log($"SkillTacticData result : {result[0].Faction}");
             return result;
         }

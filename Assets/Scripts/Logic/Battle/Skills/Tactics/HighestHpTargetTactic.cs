@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Data.Battle;
 using Core.Data.Targeting;
 using Core.Enums;
 using Core.Interfaces;
@@ -10,7 +11,8 @@ namespace Logic.Battle.Skills.Tactics
     [Serializable]
     public class HighestHpTargetTactic : ITactic
     {
-        public List<TargetGroup> EvaluateAndFilterTargetGroups(List<TargetGroup> candidates, IBattleContext ctx)
+        public List<TargetGroup> EvaluateAndFilterTargetGroups(List<TargetGroup> candidates, IBattleContext ctx,
+            SkillExecutionContext skillContext)
         {
             if (candidates == null || candidates.Count == 0)
                 return new List<TargetGroup>();

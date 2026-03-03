@@ -17,6 +17,7 @@ MonoBehaviour:
   codeName: PHYSIKATTAK
   displayName: 
   _type: 1
+  _rangeType: 0
   _action:
     rid: 2035419775026856010
   references:

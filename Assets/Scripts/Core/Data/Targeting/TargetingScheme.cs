@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Data.Battle;
 using Core.Data.Character;
 using Core.Data.Skills;
 using Core.Interfaces;
@@ -39,16 +40,18 @@ namespace Core.Data.Targeting
             return result;
         }
 
-        public List<CharacterInstance> GetTarget(CharacterInstance caster, IBattleContext ctx)
+        public List<CharacterInstance> GetTarget(CharacterInstance caster, IBattleContext ctx,
+            SkillExecutionContext skillContext)
         {
             var candidates = _scope.GetCandidateGroups(caster, ctx);
 
             foreach (var tactic in _tactics)
             {
                 //조기 탈출
+
                 if (candidates.Count <= 1) break;
                 if (tactic == null) continue;
-                candidates = tactic.EvaluateAndFilterTargetGroups(candidates, ctx);
+                candidates = tactic.EvaluateAndFilterTargetGroups(candidates, ctx, skillContext);
             }
 
             if (candidates.Count == 0) return new List<CharacterInstance>();

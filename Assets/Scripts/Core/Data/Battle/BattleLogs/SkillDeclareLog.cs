@@ -7,12 +7,14 @@ namespace Core.Data.Battle.BattleLogs
 {
     public class SkillDeclareLog : BattleLogEvent
     {
+        public CharacterInstance Actor;
         public SkillInstance Skill;
         public List<CharacterInstance> Targets;
 
         public SkillDeclareLog(CharacterInstance caster, List<CharacterInstance> target, SkillInstance skill)
             : base(BattleLogType.SkillDeclare, caster)
         {
+            Actor = caster;
             Skill = skill;
             Targets = target;
 

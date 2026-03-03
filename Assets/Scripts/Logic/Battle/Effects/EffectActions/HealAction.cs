@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Core.Attributes;
-using Core.Data.Battle.BattleLogs;
+using Core.Data.Battle;
 using Core.Data.Character;
 using Core.Data.Effect;
 using Core.Enums;
@@ -21,12 +20,12 @@ namespace Logic.Battle.Effects.EffectActions
         [SerializeField] [EditorContext(EditorContext.SkillEditor)]
         private float _bonusFactor;
 
-        public override float ApplyAction(CharacterInstance caster, CharacterInstance target)
+        public override float ApplyAction(CharacterInstance caster, CharacterInstance target, SkillExecutionContext skillContext)
         {
             //아무튼 어찌저찌 힐량계산
             target.StatSystem.Heal(_defaultHealAmount);
             //Debug.Log("Heal");
-            return 0f;
+            return _defaultHealAmount;
         }
 
         public override object Clone()

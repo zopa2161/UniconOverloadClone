@@ -15,5 +15,9 @@ namespace Core.Enums
 
         //OnFizzle, // 6. 무효화/취소 (deActivated): 타겟이 죽거나 조건이 깨져 취소됨. (Fizzle은 TCG 표준 용어)
         OnSkillEnd = 1 << 5 // 7. 스킬 종료 (AfterAction): 완전히 끝남. (스킬 사용 후 AP 페이백 등)
+
+        ,
+        OnBattleStart = 1 << 6,
+        OnBattleEnd = 1 << 7
     }
 }

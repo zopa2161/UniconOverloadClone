@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a6a58359e4a482987e8a871074f4fcb, type: 3}
+  m_Name: SKILL_Passive_Melee_Counter
+  m_EditorClassIdentifier: Game.Core::Core.Data.Skills.Skill
+  id: 1
+  icon: {fileID: 0}
+  codeName: Passive_Melee_Counter
+  displayName: 
+  _type: 1
+  _timing: 16
+  _condition:
+  - rid: 2035419799843766340
+  - rid: 2035419801516245060
+  - rid: 2620909216980533319
+  _actions:
+  - _targetingType: 1
+    _targetingScheme:
+      _scope:
+        rid: 2620909191477854289
+      _tactics:
+      - rid: 2620909216980533320
+    _effectOverrides:
+    - _effect: {fileID: 11400000, guid: 60d6d67bd6d0de341a8a69626ba663df, type: 2}
+      _effectActionOverride:
+        rid: 2620909225020751943
+    _triggerTiming: 0
+    isContinutive: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 2035419799843766340
+      type: {class: EffectTypeTriggerCondition, ns: Logic.Battle.Skills.TriggerConditions, asm: Game.Logic}
+      data:
+        _type: -1
+    - rid: 2035419801516245060
+      type: {class: PassiveTypeTriggerCondition, ns: Logic.Battle.Skills.TriggerConditions, asm: Game.Logic}
+      data:
+        _reactToPassive: 0
+    - rid: 2620909191477854289
+      type: {class: SingleTargetScope, ns: Logic.Battle.Skills.Scopes, asm: Game.Logic}
+      data:
+        _isFriendly: 0
+    - rid: 2620909216980533319
+      type: {class: CounterTriggerCondition, ns: Logic.Battle.Skills.TriggerConditions, asm: Game.Logic}
+      data: 
+    - rid: 2620909216980533320
+      type: {class: CounterTactic, ns: Logic.Battle.Skills.Tactics, asm: Game.Logic}
+      data: 
+    - rid: 2620909225020751943
+      type: {class: DealDamageAction, ns: Logic.Battle.Effects.EffectActions, asm: Game.Logic}
+      data:
+        _defaultDamage: 1
+        _bonusStatType: 4
+        _bonusFactor: 0
+        _defenseStatType: 9
