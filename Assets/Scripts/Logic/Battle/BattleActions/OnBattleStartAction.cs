@@ -33,7 +33,7 @@ namespace Logic.Battle.BattleActions
 
             if (_pendingPassivesQueue.Count == 0) _isFinished = true;
 
-            requester.RecordEvent(new BattleStartLog(BattleLogType.Movement, null));
+            requester.RecordEvent(new BattleStartLog(BattleLogType.Movement, null,null));
         }
     }
 }

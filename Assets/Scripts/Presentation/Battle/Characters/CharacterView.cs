@@ -32,7 +32,7 @@ namespace Presentation.Battle.Characters
         public Slider hpBar;
 
         //애니메이션용 상태변수
-        private bool isInitialPosition;
+        public bool isInitialPosition = true;
 
         public CharacterInstance LogicData { get; private set; }
 
@@ -148,12 +148,12 @@ namespace Presentation.Battle.Characters
             }
         }
 
-        public void MoveToTarget(Transform targetTransform)
+        public void MoveToTarget(Vector3 targetPosition)
         {
-            if (targetTransform == null) return;
+        
 
             // 이동 코루틴 실행
-            StartCoroutine(MoveRoutine(targetTransform.position));
+            StartCoroutine(MoveRoutine(targetPosition));
         }
 
         // 🌟 실제 부드러운 이동을 처리하는 코루틴
@@ -188,6 +188,7 @@ namespace Presentation.Battle.Characters
             }
 
             StartCoroutine(ReturnRoutine());
+            isInitialPosition = true;
         }
 
         // 🌟 실제 부드러운 복귀를 처리하는 코루틴

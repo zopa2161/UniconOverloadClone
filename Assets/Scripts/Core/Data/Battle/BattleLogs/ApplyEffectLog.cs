@@ -8,15 +8,15 @@ namespace Core.Data.Battle.BattleLogs
     public class ApplyEffectLog : BattleLogEvent
     {
         public Effect.Effect Effect;
-        public List<float> Effections;
-       public bool isConsume;
+        public List<float> Effections; 
+        public bool isConsume;
         public Skill Skill;
-        public List<CharacterInstance> Targets;
+     
 
 
         public ApplyEffectLog(Skill skill, Effect.Effect effect, List<float> effections, CharacterInstance caster,
             List<CharacterInstance> targets) :
-            base(BattleLogType.ApplyEffect, caster)
+            base(BattleLogType.ApplyEffect, caster,targets)
         {
             Effections = effections;
             Skill = skill;
@@ -26,7 +26,7 @@ namespace Core.Data.Battle.BattleLogs
         }
 
         public ApplyEffectLog(Effect.Effect effect, List<float> effections, CharacterInstance caster,
-            List<CharacterInstance> targets) : base(BattleLogType.ApplyEffect, caster)
+            List<CharacterInstance> targets) : base(BattleLogType.ApplyEffect, caster, targets)
         {
             Skill = null;
             Effections = effections;
@@ -34,10 +34,7 @@ namespace Core.Data.Battle.BattleLogs
             Targets = targets;
         
         }
-
-        public ApplyEffectLog(BattleLogType type, CharacterInstance actor) : base(type, actor)
-        {
-        }
+        
 
         public void LateConsumeInjection()
         {

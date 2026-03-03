@@ -45,8 +45,6 @@ namespace Core.Data.Skills
             foreach (var effectOverride in _effectOverrides)
             {
                 var effections = new List<float>();
-                Debug.Log($"last caster : {caster.Data.CodeName}");
-                Debug.Log($"last target : {targets[0].Data.CodeName}");
                 for (int i = targets.Count - 1; i >= 0; i--)
                 {
                     var effection = effectOverride.EffectActionOverride.ApplyAction(caster, targets[i], skillContext);

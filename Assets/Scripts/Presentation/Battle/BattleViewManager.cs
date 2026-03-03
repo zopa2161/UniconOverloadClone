@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Core.Data.Battle.BattleLogs;
 using Core.Data.Character;
 using Core.Enums;
@@ -101,10 +102,8 @@ namespace Presentation.Battle
                 if (logEvent is SkillDeclareLog skillDeclareLog)
                 {
                     var actorView = GetViewFromInstance(skillDeclareLog.Actor);
-                    if (actorView != null)
-                    {
-                    }
-
+                    
+           
                     yield return new WaitForSeconds(1.0f);
                 }
                 else if (logEvent is ApplyEffectLog effectLog)
@@ -114,8 +113,8 @@ namespace Presentation.Battle
                     {
                         Debug.Log("consuming");
                         if (effectLog.Skill.Type == SkillType.Active)
-                            actorView.ConsumeVisualAP(); // AP 1 소모 (기획에 따라 소모량 조절)
-                        else if (effectLog.Skill.Type == SkillType.Passive) actorView.ConsumeVisualPP(); // PP 1 소모
+                            actorView.ConsumeVisualAP(effectLog.Skill.ConsumingPoint); // AP 1 소모 (기획에 따라 소모량 조절)
+                        else if (effectLog.Skill.Type == SkillType.Passive) actorView.ConsumeVisualPP(effectLog.Skill.ConsumingPoint); // PP 1 소모
                     }
 
                     var targetViews = new List<CharacterView>();
@@ -161,18 +160,34 @@ namespace Presentation.Battle
                 else if (logEvent is BeforeHitLog beforeHitLog)
                 {
                     var actorView = GetViewFromInstance(beforeHitLog.Actor);
-                    if (actorView != null)
-                        if (beforeHitLog.effet.RangeType == EffectRangeType.Melee)
-                            actorView.MoveToTarget(_midCenter);
+    
+                    // actorView가 존재하고, 근거리 공격일 때만 실행 (중첩 if문 병합)
+                    if (actorView != null && beforeHitLog.effet.RangeType == EffectRangeType.Melee)
+                    {
+                        var targetView = GetViewFromInstance(beforeHitLog.Targets[0]);
+        
+                        // 1. Transform 전체가 아닌 Vector3 '위치 값'만 빼서 복사본을 만듭니다.
+                        Vector3 targetFrontPosition = targetView.transform.position;
+        
+                        // 2. 복사된 Vector3 값의 x좌표를 팩션에 따라 수정합니다.
+                        if (beforeHitLog.Targets[0].Faction == CharacterFaction.Friendly)
+                            targetFrontPosition.x -= 0.5f;
+                        else
+                            targetFrontPosition.x += 0.5f;
+            
+                        // 3. 계산이 끝난 새로운 좌표(Vector3)로 이동시킵니다.
+                        actorView.MoveToTarget(targetFrontPosition);
+                        actorView.isInitialPosition = false;
+                    }
                 }
                 else if (logEvent is AfterHitLog afterHitLog)
                 {
-                    var actorView = GetViewFromInstance(afterHitLog.Actor);
-                    if (actorView != null)
-                    {
-                        actorView.ReturnToSpawnPoint();
-                        if (_uiManager != null) _uiManager.OffSkillName();
-                    }
+                    // var actorView = GetViewFromInstance(afterHitLog.Actor);
+                    // if (actorView != null)
+                    // {
+                    //     actorView.ReturnToSpawnPoint();
+                    //     if (_uiManager != null) _uiManager.OffSkillName();
+                    // }
                 }
                 else if (logEvent is CharacterDeathLog deathLog)
                 {
@@ -181,6 +196,13 @@ namespace Presentation.Battle
                     {
                         actorView.CharacterDeath();
                         Debug.Log("Character Death");
+                    }
+                }
+                else if (logEvent is ActiveSkillEndLog activeSkillEndLog)
+                {
+                    foreach (var view in _viewCache.Values)
+                    {
+                        if(!view.isInitialPosition) view.ReturnToSpawnPoint();
                     }
                 }
 

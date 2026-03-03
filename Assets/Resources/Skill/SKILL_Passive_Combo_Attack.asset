@@ -36,7 +36,7 @@ MonoBehaviour:
         rid: 2620909225020751949
     _triggerTiming: 0
     isContinutive: 0
-    _isConsumePoint: 1
+  _consumingPoint: 1
   references:
     version: 2
     RefIds:

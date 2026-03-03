@@ -25,7 +25,7 @@ namespace Logic.Battle.Skills.Scopes
             for (var i = 0; i < 6; i++)
             {
                 var ch = board.GetSingleCharacter(i);
-                if (ch == null || ch.Count == 0) continue;
+                if (ch == null || ch.Count == 0 || ch[0].IsDead ) continue;
                 candidates.Add(new TargetGroup(ch));
             }
 

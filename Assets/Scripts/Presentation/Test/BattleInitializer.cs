@@ -53,7 +53,7 @@ namespace Presentation.Test
             var friendlyBoard = new CharacterBoard();
             friendlyBoard.characters[0] = fr1;
             friendlyBoard.characters[1] = fr2;
-            friendlyBoard.characters[2] = fr3;
+            friendlyBoard.characters[5] = fr3;
 
 
             var enemyBoard = new CharacterBoard();

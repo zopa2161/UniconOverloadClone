@@ -47,6 +47,7 @@ namespace Logic.Battle
                     //Debug.Log($"Passive React {skill.CodeName}");
                     //해야할것.
                     //1. 타이밍이 맞는가? 2. 조건이 맞는가?
+                    if (data.Skill.Data.ConsumingPoint > character.GetStatValue(StatType.PP)) continue;
                     if (timing == skill.Timing && skill.IsSatisfyPassiveCondition(character, ctx))
                     {
                         // //3. 타이밍과 조건이 맞으면 타겟 만들기.

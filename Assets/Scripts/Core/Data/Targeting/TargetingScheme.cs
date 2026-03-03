@@ -40,10 +40,10 @@ namespace Core.Data.Targeting
             return result;
         }
 
-        public List<CharacterInstance> GetTarget(CharacterInstance caster, IBattleContext ctx,
+        public List<CharacterInstance> GetTarget(CharacterInstance caster, IBattleContext battleContext,
             SkillExecutionContext skillContext)
         {
-            var candidates = _scope.GetCandidateGroups(caster, ctx);
+            var candidates = _scope.GetCandidateGroups(caster, battleContext);
 
             foreach (var tactic in _tactics)
             {
@@ -51,7 +51,7 @@ namespace Core.Data.Targeting
 
                 if (candidates.Count <= 1) break;
                 if (tactic == null) continue;
-                candidates = tactic.EvaluateAndFilterTargetGroups(candidates, ctx, skillContext);
+                candidates = tactic.EvaluateAndFilterTargetGroups(candidates, battleContext, skillContext);
             }
 
             if (candidates.Count == 0) return new List<CharacterInstance>();
@@ -59,8 +59,6 @@ namespace Core.Data.Targeting
             var finalGroup = candidates.Count > 1
                 ? candidates[Random.Range(0, candidates.Count)]
                 : candidates[0];
-            //Debug.Log($"finalGroup  : {finalGroup.Targets[0].Faction}");
-            //Debug.Log($"Targeting Scheme Candidates Count : {candidates[0].Targets[0].Faction}");
             return finalGroup.Targets;
         }
     }

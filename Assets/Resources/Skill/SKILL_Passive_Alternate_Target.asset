@@ -23,6 +23,7 @@ MonoBehaviour:
   - rid: 2620909225020751965
   - rid: 2620909225020751966
   - rid: 2620909225020751967
+  - rid: 2620909238438330438
   _actions:
   - _targetingType: 1
     _targetingScheme:
@@ -36,6 +37,7 @@ MonoBehaviour:
         rid: 2620909225020751970
     _triggerTiming: 0
     isContinutive: 0
+  _consumingPoint: 1
   references:
     version: 2
     RefIds:
@@ -64,3 +66,7 @@ MonoBehaviour:
     - rid: 2620909225020751971
       type: {class: SameTargetTactic, ns: Logic.Battle.Skills.Tactics, asm: Game.Logic}
       data: 
+    - rid: 2620909238438330438
+      type: {class: SameTargetTriggerCondition, ns: Logic.Battle.Skills.TriggerConditions, asm: Game.Logic}
+      data:
+        isSameTarget: 0

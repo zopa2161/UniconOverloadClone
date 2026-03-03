@@ -24,8 +24,8 @@ namespace Logic.Battle.BattleActions
             {
                 //Debug.Log("consuming at preBattle");
                 if (_skillContext.Skill.Type == SkillType.Active)
-                    _skillContext.caster.StatSystem.ConsumeSkillPoint(StatType.AP, 1);
-                else if (_skillContext.Skill.Type == SkillType.Passive) _skillContext.caster.StatSystem.ConsumeSkillPoint(StatType.PP, 1);
+                    _skillContext.caster.StatSystem.ConsumeSkillPoint(StatType.AP, _skillContext.Skill.ConsumingPoint);
+                else if (_skillContext.Skill.Type == SkillType.Passive) _skillContext.caster.StatSystem.ConsumeSkillPoint(StatType.PP, _skillContext.Skill.ConsumingPoint );
                 _skillContext.HasConsumedPoint = true;
             }
 

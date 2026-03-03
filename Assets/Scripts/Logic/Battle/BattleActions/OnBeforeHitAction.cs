@@ -15,8 +15,8 @@ namespace Logic.Battle.BattleActions
         {
             //Debug.Log("Execute On OnBefore Action");
             PendPassiveQueue(requester, battleContext, SkillTiming.BeforeHit);
-            requester.RecordEvent(new BeforeHitLog(BattleLogType.Movement, _skillContext.caster,
-                _skillContext.SkillAction.EffectOverrides[0].Effect));
+            requester.RecordEvent(new BeforeHitLog(BattleLogType.Movement,
+                _skillContext.SkillAction.EffectOverrides[0].Effect, _skillContext.caster,_skillContext.targets));
         }
     }
 }

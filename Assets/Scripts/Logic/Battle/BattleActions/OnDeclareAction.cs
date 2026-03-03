@@ -39,7 +39,7 @@ namespace Logic.Battle.BattleActions
             // 한번 선언되었다면 다시 선언 x
             if (!declared)
             {
-                requester.RecordEvent(new SkillDeclareLog(Caster, Targets, Skill));
+                requester.RecordEvent(new SkillDeclareLog(Skill, Caster, Targets));
                 declared = true;
             }
 

@@ -14,7 +14,7 @@ namespace Logic.Battle.BattleActions
         public override void Execute(IBattleAPI requester, IBattleContext battleContext)
         {
             PendPassiveQueue(requester, battleContext, SkillTiming.AfterHit);
-            requester.RecordEvent(new AfterHitLog(BattleLogType.Movement, _skillContext.caster));
+            requester.RecordEvent(new AfterHitLog(BattleLogType.Movement, _skillContext.caster,_skillContext.targets));
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Logic.Battle.Effects.EffectActions
         {
             //아무튼 복잡한 계산을 해서 최종 데미지를 결정한다
             target.StatSystem.TakeDamage(_defaultDamage);
-            Debug.Log($"caster : {caster.Data.CodeName} target : {target.Data.CodeName} Damage Dealt");
+            //Debug.Log($"caster : {caster.Data.CodeName} target : {target.Data.CodeName} Damage Dealt");
             return _defaultDamage;
         }
 

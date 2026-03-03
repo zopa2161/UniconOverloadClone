@@ -21,6 +21,7 @@ namespace Core.Data.Skills
         private List<ITriggerCondition> _condition;
 
         [SerializeField] private List<SkillAction> _actions;
+        [SerializeField] private int _consumingPoint;
 
 
         public SkillType Type => _type;
@@ -28,6 +29,7 @@ namespace Core.Data.Skills
         public SkillTiming Timing => _timing;
         public List<SkillAction> Actions => _actions;
         public IScope Scope => _actions[0].Scope;
+        public int ConsumingPoint => _consumingPoint;
 
         public bool IsSatisfyPassiveCondition(CharacterInstance caster, SkillExecutionContext ctx)
         {

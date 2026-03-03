@@ -11,18 +11,14 @@ namespace Core.Data.Battle.BattleLogs
         public SkillInstance Skill;
         public List<CharacterInstance> Targets;
 
-        public SkillDeclareLog(CharacterInstance caster, List<CharacterInstance> target, SkillInstance skill)
-            : base(BattleLogType.SkillDeclare, caster)
+        public SkillDeclareLog(SkillInstance skill, CharacterInstance caster, List<CharacterInstance> targets)
+            : base(BattleLogType.SkillDeclare, caster,targets)
         {
             Actor = caster;
             Skill = skill;
-            Targets = target;
+            Targets = targets;
 
             log = $"{caster.Data.CodeName} {caster.Faction} Declare {skill.Data.CodeName}";
-        }
-
-        public SkillDeclareLog(BattleLogType type, CharacterInstance actor) : base(type, actor)
-        {
         }
     }
 }

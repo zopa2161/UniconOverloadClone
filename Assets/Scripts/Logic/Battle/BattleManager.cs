@@ -91,11 +91,15 @@ namespace Logic.Battle
                     //타겟팅 작업 해주기. -> 액티브 스킬 전처리
                     foreach (var skillTacticData in caster.SkillSystem.ActiveSkillTacticQueue)
                     {
+                        //ap소모량에 따라 사용할 수 없다면 continue;
+                        if ((skillTacticData.Skill.Data.ConsumingPoint > caster.GetStatValue(StatType.AP))) continue;
+                        
                         var target = skillTacticData.GetTarget(caster, BattleContext);
                         if (target.Count == 0 || target == null) continue;
                         //Debug.Log($"Target : {target[0]}");
                         var declareAction = new OnDeclareAction(caster, target, skillTacticData.Skill, null);
                         //리액션 스택에 넣고 break
+                        actionStack.Push(new OnActiveSkillEndAction());
                         actionStack.Push(declareAction);
                         break;
                     }
