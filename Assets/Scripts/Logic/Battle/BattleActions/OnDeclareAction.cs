@@ -42,8 +42,7 @@ namespace Logic.Battle.BattleActions
                 requester.RecordEvent(new SkillDeclareLog(Skill, Caster, Targets));
                 declared = true;
             }
-
-            //스킬을 순회하면서 스킬 액션을 뿌려주면 됩니다.
+            
             //1. 스킬액션 꺼내기
             var skillAction = Skill.Data.Actions[executeIndex];
 
